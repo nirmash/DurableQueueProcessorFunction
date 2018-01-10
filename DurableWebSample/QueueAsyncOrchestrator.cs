@@ -15,9 +15,6 @@ namespace DurableWebSample
         [FunctionName("QueueAsyncOrchestrator")]
         public static async Task<object> Run([OrchestrationTrigger] DurableOrchestrationContext context, TraceWriter log)
         {
-            log.Info("main");
-            log.Info(context.InstanceId);
-
             var queueTask = await context.CallActivityAsync<Task>("SendToQueue", context.InstanceId);
 
             TimeSpan timeout = TimeSpan.FromSeconds(10);
@@ -34,14 +31,14 @@ namespace DurableWebSample
                 {
                     // success case
                     cts.Cancel();
-                    log.Info("in winner == activity task" + activityTask.Result);
+                    log.Info(activityTask.Result);
                     return activityTask.Result;
                 }
                 else
                 {
                     log.Info("timeout case");
                     // timeout case 
-                    return "timed out";
+                    return "timeout case";
                 }
             }
         }

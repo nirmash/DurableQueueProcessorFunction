@@ -11,7 +11,7 @@ namespace DurableWebSample
         [return: Queue("in-data")]
         public static string Run([ActivityTrigger] string msg, TraceWriter log)
         {
-            log.Info($"InvokePi running = '{msg}'.");
+            log.Info($"Send message to Queue = '{msg}'.");
             return msg;
         }
     }
