@@ -12,11 +12,11 @@ namespace DurableWebSample
     {
         [FunctionName("DurableHttpEndpoint")]
         public static async Task<HttpResponseMessage> Run(
-        HttpRequestMessage req,
-        DurableOrchestrationClient starter,
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")]HttpRequestMessage req,
+        [OrchestrationClient] DurableOrchestrationClient starter,
         TraceWriter log)
         {
-            string instanceId = await starter.StartNewAsync("SendToQueue", "1");
+            string instanceId = await starter.StartNewAsync("QueueAsyncOrchestrator", "1");
             log.Info($"Started orchestration with ID = '{instanceId}'.");
             return starter.CreateCheckStatusResponse(req, instanceId);
         }
