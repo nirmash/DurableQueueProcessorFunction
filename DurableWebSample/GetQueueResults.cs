@@ -15,10 +15,9 @@ namespace DurableWebSample
             log.Info("queueu running: " + myQueueItem);
             try
             {
-                PiMsg msg = JsonConvert.DeserializeObject<PiMsg>(myQueueItem);
-                log.Info(msg.Temp.ToString());
-                await client.RaiseEventAsync(msg.Id, "GotMsg", myQueueItem);
-                log.Info($"Message Id processed: {msg.Id}");
+                ResponseMsg msg = JsonConvert.DeserializeObject<ResponseMsg>(myQueueItem);
+                await client.RaiseEventAsync(msg.BucketID, "GotMsg", myQueueItem);
+                log.Info($"Message Id processed: {msg.BucketID}");
             }
             catch (Exception err)
             {
@@ -27,11 +26,10 @@ namespace DurableWebSample
             return;
         }
     }
-    public class PiMsg
+    public class ResponseMsg
     {
-        public double Temp { get; set; }
-        public double Pressure { get; set; }
-        public double Humidity { get; set; }
-        public string Id { get; set; }
+        public string BucketID { get; set; }
+        public string Response { get; set; }
+
     }
 }

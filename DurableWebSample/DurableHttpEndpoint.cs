@@ -16,7 +16,8 @@ namespace DurableWebSample
         [OrchestrationClient] DurableOrchestrationClient starter,
         TraceWriter log)
         {
-            string instanceId = await starter.StartNewAsync("QueueAsyncOrchestrator", "1");
+            string strContent = await req.Content.ReadAsStringAsync();
+            string instanceId = await starter.StartNewAsync("QueueAsyncOrchestrator", strContent);
             log.Info($"Started orchestration with ID = '{instanceId}'.");
             return starter.CreateCheckStatusResponse(req, instanceId);
         }

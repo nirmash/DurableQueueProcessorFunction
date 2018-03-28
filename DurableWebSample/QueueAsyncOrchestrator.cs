@@ -15,7 +15,7 @@ namespace DurableWebSample
         [FunctionName("QueueAsyncOrchestrator")]
         public static async Task<object> Run([OrchestrationTrigger] DurableOrchestrationContext context, TraceWriter log)
         {
-            var queueTask = await context.CallActivityAsync<Task>("SendToQueue", context.InstanceId);
+            var queueTask = await context.CallActivityAsync<Task>("SendToQueue", context.GetRawInput());
 
             TimeSpan timeout = TimeSpan.FromSeconds(10);
             DateTime deadline = context.CurrentUtcDateTime.Add(timeout);
