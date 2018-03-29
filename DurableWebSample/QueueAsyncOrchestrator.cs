@@ -40,7 +40,7 @@ namespace DurableWebSample
                 {
                     log.Info("timeout case");
                     // timeout case 
-                    return "timeout case";
+                    return "Dump Processed";
                 }
             }
         }
