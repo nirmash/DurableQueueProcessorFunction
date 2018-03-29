@@ -16,7 +16,7 @@ namespace DurableWebSample
             try
             {
                 ResponseMsg msg = JsonConvert.DeserializeObject<ResponseMsg>(myQueueItem);
-                await client.RaiseEventAsync(msg.BucketID, "GotMsg", myQueueItem);
+                await client.RaiseEventAsync(msg.Id, "GotMsg", myQueueItem);
                 log.Info($"Message Id processed: {msg.BucketID}");
             }
             catch (Exception err)
@@ -28,6 +28,7 @@ namespace DurableWebSample
     }
     public class ResponseMsg
     {
+        public string Id { get; set; }
         public string BucketID { get; set; }
         public string Response { get; set; }
 
