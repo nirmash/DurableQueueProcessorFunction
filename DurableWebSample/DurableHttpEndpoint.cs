@@ -18,7 +18,6 @@ namespace DurableWebSample
         {
             string strContent = await req.Content.ReadAsStringAsync();
             string instanceId = await starter.StartNewAsync("QueueAsyncOrchestrator", strContent);
-            log.Info($"Started orchestration with ID = '{instanceId}'.");
             return starter.CreateCheckStatusResponse(req, instanceId);
         }
     }

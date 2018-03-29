@@ -15,11 +15,9 @@ namespace DurableWebSample
         [FunctionName("QueueAsyncOrchestrator")]
         public static async Task<object> Run([OrchestrationTrigger] DurableOrchestrationContext context, TraceWriter log)
         {
-            //string dumpMsg = @"{\""Id"": \""" + context.InstanceId + @"\"", ";
-            //dumpMsg = context.GetRawInput().Replace("{", dumpMsg);
             var queueTask = await context.CallActivityAsync<Task>("SendToQueue", context.InstanceId);
 
-            TimeSpan timeout = TimeSpan.FromSeconds(10);
+            TimeSpan timeout = TimeSpan.FromSeconds(4);
             DateTime deadline = context.CurrentUtcDateTime.Add(timeout);
             log.Info(deadline.ToString());
             using (var cts = new CancellationTokenSource())
@@ -40,7 +38,7 @@ namespace DurableWebSample
                 {
                     log.Info("timeout case");
                     // timeout case 
-                    return "Dump Processed";
+                    return "Dump Processed! Goto http://doc.microsoft.com/fix/myApp-1.0.0-myappUX.dll-00x12344axxx for solution";
                 }
             }
         }
