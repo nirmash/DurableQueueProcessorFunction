@@ -38,7 +38,7 @@ namespace DurableWebSample
                 {
                     log.Info("timeout case");
                     // timeout case 
-                    return "Dump Processed! Goto http://doc.microsoft.com/fix/myApp-1.0.0-myappUX.dll-00x12344axxx for solution";
+                    return "Timed Out";
                 }
             }
         }

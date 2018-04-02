@@ -2,7 +2,8 @@ using System;
 using System.Threading;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
-using Newtonsoft.Json; 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace DurableWebSample
 {
@@ -15,9 +16,10 @@ namespace DurableWebSample
             log.Info("queueu running: " + myQueueItem);
             try
             {
-                ResponseMsg msg = JsonConvert.DeserializeObject<ResponseMsg>(myQueueItem);
-                await client.RaiseEventAsync(msg.Id, "GotMsg", myQueueItem);
-                log.Info($"Message Id processed: {msg.BucketID}");
+                //assumes there is an ID in the message, rest is specific
+                JObject msg = JObject.Parse(myQueueItem);
+                await client.RaiseEventAsync((string)msg["Id"], "GotMsg", myQueueItem);
+                log.Info($"Message Id processed: {myQueueItem}");
             }
             catch (Exception err)
             {
@@ -25,12 +27,5 @@ namespace DurableWebSample
             }
             return;
         }
-    }
-    public class ResponseMsg
-    {
-        public string Id { get; set; }
-        public string BucketID { get; set; }
-        public string Response { get; set; }
-
     }
 }
