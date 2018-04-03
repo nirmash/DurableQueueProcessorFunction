@@ -12,7 +12,7 @@ namespace DurableWebSample
     {
         [FunctionName("DurableHttpEndpoint")]
         public static async Task<HttpResponseMessage> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, methods: "post", Route = "orchestrators")]HttpRequestMessage req,
+        [HttpTrigger(AuthorizationLevel.Anonymous, methods: "post,get", Route = "orchestrators")]HttpRequestMessage req,
         [OrchestrationClient] DurableOrchestrationClient starter,
         TraceWriter log)
         {
