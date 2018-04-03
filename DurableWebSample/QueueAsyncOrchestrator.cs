@@ -17,7 +17,7 @@ namespace DurableWebSample
         {
             var queueTask = await context.CallActivityAsync<Task>("SendToQueue", context.InstanceId);
 
-            TimeSpan timeout = TimeSpan.FromSeconds(4);
+            TimeSpan timeout = TimeSpan.FromSeconds(10);
             DateTime deadline = context.CurrentUtcDateTime.Add(timeout);
             log.Info(deadline.ToString());
             using (var cts = new CancellationTokenSource())
